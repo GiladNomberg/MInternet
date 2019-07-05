@@ -1,8 +1,4 @@
-# SPA MVP - MInternet
-
-> A Vue.js and Flask project
-represent and visualize data
-filter and sort options are available
+# Vue.js and Flask project
 
 ## Build Setup
 
@@ -16,5 +12,5 @@ start server
 
 start client
 # cd fronted
-#npm run dev
+# npm run dev
 ```
