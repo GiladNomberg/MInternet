@@ -3,12 +3,12 @@
     <h1 class="text-center">Customers information</h1>
     <div class="row">
       <div class="col-lg-2">
-        <div v-for="(segment, index) in Segments" :key="index">
+        <div v-for="(segment, index) in segments" :key="index">
           <label><input type="radio" name="segmentRadio" v-on:click = "getCustomersBySegment(segment)" checked>{{segment}}</label>
         </div>  
         <label><b>Sort by</b></label>
-        <div v-for="(sort) in SortBy" :key="sort">
-          <label><input type="radio" name="sortRadio" v-on:click = "sortBy(sort)" checked>{{sort}}</label>
+        <div v-for="(sort) in sortBy" :key="sort">
+          <label><input type="radio" name="sortRadio" v-on:click = "sorting(sort)" checked>{{sort}}</label>
         </div>
       </div>  
       <div class="col-lg-7">
@@ -21,7 +21,7 @@
             <td style="color: #3e88f0;"><b>No_of_complaints</b></td> 
             <td style="color: #3e88f0;"><b>Contract_value</b></td> 
           </tr>
-          <tr v-for="(customer, index) in Customers" :key="index">
+          <tr v-for="(customer, index) in customers" :key="index">
             <td>{{customer.id}}</td> 
             <td>{{customer.gender}}</td> 
             <td>{{customer.segment}}</td> 
@@ -49,15 +49,16 @@ export default {
   },
   data() {
     return {
-      Customers: [],
-      Segments : ['Segment 1','Segment 2','Segment 3','Segment 4','Segment 5','All segments'],
-      SortBy : ['no_of_complaints','years_customer','contract_value','gender','id'],
+      customers: [],
+      segments : ['Segment 1','Segment 2','Segment 3','Segment 4','Segment 5','All segments'],
+      sortBy : ['no_of_complaints','years_customer','contract_value','gender','id'],
       id : 'All segments',
       sortElem : 'id',
       averageYears : 0,
       averageComplains : 0,
       chartFlag : true,
       arrayParams : [],
+      startFlag : true,
     };
   },
   mounted () {
@@ -65,12 +66,14 @@ export default {
   }, 
   methods: {
     getCustomersBySegment(segment_id) {
+      if(this.id != segment_id || this.startFlag){
+      this.startFlag = false  
       this.chartFlag = false
       this.id = segment_id
       const path = 'http://localhost:5000/';
       axios.get(path, {params: {id: segment_id}})
       .then((res) => {
-          this.Customers = res.data.data;
+          this.customers = res.data.data;
           this.averageYears = res.data.years;
           this.averageComplains = res.data.complains;
           let idSegment = ""
@@ -81,17 +84,20 @@ export default {
           }
           this.arrayParams = [this.averageYears,this.averageComplains,idSegment]
           this.chartFlag = true
-          this.sortBy(this.sortElem)
+          this.sorting(this.sortElem)
           console.log(res)
         })
         .catch((error) => {
           console.error(error);
         });
+      }
 
     },
-    sortBy(sorting_element) {
+    sorting(sorting_element) {
+      if(this.sortElem != sorting_element){
       this.sortElem = sorting_element
-      this.Customers = _.sortBy(this.Customers, [this.sortElem]);
+      this.customers = _.sortBy(this.customers, [this.sortElem]);
+      }
     },
   }
 };
