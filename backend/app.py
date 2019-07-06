@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
@@ -27,8 +28,12 @@ for index,row in df.iterrows():
 @app.route("/")
 def get_data():
 	response_object = {}
-	segment_id = request.args.get("id")
-	segment_id = int(segment_id)
+	_id = request.args.get("id")
+	isDigit = re.search("\d", _id)
+	if isDigit:
+		segment_id = int(_id[isDigit.start()])
+	else:	
+		segment_id = 0
 	if(segment_id != 0):
 		specificCustomers = []
 		for customer in customers:

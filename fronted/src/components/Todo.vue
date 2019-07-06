@@ -3,21 +3,14 @@
     <h1 class="text-center">Customers information</h1>
     <div class="row">
       <div class="col-lg-2">
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('0')" checked>All segments</label>
-        <hr>
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('1')">Segment 1</label>
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('2')">Segment 2</label>
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('3')">Segment 3</label>
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('4')">Segment 4</label>
-        <label class="radio-inline"><input type="radio" name="optradio" v-on:click = "getCustomersBySegment('5')">Segment 5</label>
-        <hr>
+        <div class="t" v-for="(segment, index) in Segments" :key="index">
+          <label><input type="radio" name="segmentRadio" v-on:click = "getCustomersBySegment(segment)" checked>{{segment}}</label>
+        </div>  
         <label><b>Sort by</b></label>
-        <label class="radio-inline"><input type="radio" name="optradio1" v-on:click = "sortBy('id')" checked>Id</label>
-        <label class="radio-inline"><input type="radio" name="optradio1" v-on:click = "sortBy('years_customer')">Years_customer</label>
-        <label class="radio-inline"><input type="radio" name="optradio1" v-on:click = "sortBy('no_of_complaints')">No_of_complaints</label>
-        <label class="radio-inline"><input type="radio" name="optradio1" v-on:click = "sortBy('contract_value')">Contract_value</label>
-        <label class="radio-inline"><input type="radio" name="optradio1" v-on:click = "sortBy('gender')">Gender</label>
-      </div>
+        <div class="t" v-for="(sort, index) in SortBy" :key="index">
+          <label><input type="radio" name="sortRadio" v-on:click = "sortBy(sort)" checked>{{sort}}</label>
+        </div>
+      </div>  
       <div class="col-lg-7">
         <table class="table">
           <tr>
@@ -38,7 +31,9 @@
           </tr>
         </table> 
       </div>
-      <div class="col-lg-3"><barchart v-if="this.chartFlag" :data="this.arrayParams"/></div>
+      <div class="col-lg-3">
+        <barchart v-if="this.chartFlag" :data="this.arrayParams"/>
+      </div>
     </div>
   </div>
 </template>
@@ -55,8 +50,10 @@ export default {
   data() {
     return {
       Customers: [],
-      id : '0',
-      sortElem : '',
+      Segments : ['Segment 1','Segment 2','Segment 3','Segment 4','Segment 5','All segments'],
+      SortBy : ['years_customer','no_of_complaints','contract_value','id'],
+      id : 'All segments',
+      sortElem : 'id',
       averageYears : 0,
       averageComplains : 0,
       chartFlag : true,
@@ -80,7 +77,7 @@ export default {
           if(this.id == '0')
             idSegment = 'All segments'
           else {
-            idSegment = "Segment " + this.id
+            idSegment = this.id
           }
           this.arrayParams = [this.averageYears,this.averageComplains,idSegment]
           this.chartFlag = true
