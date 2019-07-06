@@ -7,7 +7,7 @@ intall requirements
 # pip install -r requirements.txt
 
 install npm
-# cd fronted
+# cd frontend
 # npm install
 
 start server
@@ -15,6 +15,6 @@ start server
 # flask run
 
 start client
-# cd fronted
+# cd frontend
 # npm run dev
 ```
