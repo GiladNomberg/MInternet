@@ -3,11 +3,11 @@
     <h1 class="text-center">Customers information</h1>
     <div class="row">
       <div class="col-lg-2">
-        <div class="t" v-for="(segment, index) in Segments" :key="index">
+        <div v-for="(segment, index) in Segments" :key="index">
           <label><input type="radio" name="segmentRadio" v-on:click = "getCustomersBySegment(segment)" checked>{{segment}}</label>
         </div>  
         <label><b>Sort by</b></label>
-        <div class="t" v-for="(sort, index) in SortBy" :key="index">
+        <div v-for="(sort) in SortBy" :key="sort">
           <label><input type="radio" name="sortRadio" v-on:click = "sortBy(sort)" checked>{{sort}}</label>
         </div>
       </div>  
