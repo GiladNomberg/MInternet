@@ -51,7 +51,7 @@ export default {
     return {
       Customers: [],
       Segments : ['Segment 1','Segment 2','Segment 3','Segment 4','Segment 5','All segments'],
-      SortBy : ['years_customer','no_of_complaints','contract_value','id'],
+      SortBy : ['no_of_complaints','years_customer','contract_value','gender','id'],
       id : 'All segments',
       sortElem : 'id',
       averageYears : 0,

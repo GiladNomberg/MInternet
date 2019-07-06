@@ -6,9 +6,9 @@
 intall requirements 
 # pip install -r requirements.txt
 
-install webpack-cli
+install npm
 # cd fronted
-# npm i webpack-cli
+# npm install
 
 start server
 # cd backend
