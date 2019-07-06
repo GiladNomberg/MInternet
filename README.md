@@ -6,6 +6,10 @@
 intall requirements 
 # pip install -r requirements.txt
 
+install webpack-cli
+# cd fronted
+# npm i webpack-cli
+
 start server
 # cd backend
 # flask run
