@@ -1,4 +1,4 @@
-# Vue.js and Flask project 
+# Vue.js and Flask project
 
 ## Build Setup
 
